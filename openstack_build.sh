@@ -1,17 +1,6 @@
-OK="CONFIG OK"
-echo -n "Checking config env variables... "
-[ -z "$OS_IDENTITY_API_VERSION" ] && { echo "ERROR: OS_IDENTITY_API_VERSION Empty" ; unset OK; }
-[ -z "$FLAVOR_NAME" ] && { echo "ERROR: FLAVOR_NAME Empty" ; unset OK; }
-[ -z "$IMAGE_NAME" ] && { echo "ERROR: IMAGE_NAME Empty" ; unset OK; }
-[ -z "$SECURITY_GROUP_NAME" ] && { echo "ERROR: SECURITY_GROUP_NAME Empty" ; unset OK; }
-[ -z "$KEYPAIR_NAME" ] && { echo "ERROR: KEYPAIR_NAME Empty" ; unset OK; }
-[ -z "$PROJECT_NAME" ] && { echo "ERROR: PROJECT_NAME Empty" ; unset OK; }
-[ -z "$NETWORK_NAME" ] && { echo "ERROR: NETWORK_NAME Empty" ; unset OK; }
-[ -z "$CLUSTER_NAME" ] && { echo "ERROR: CLUSTER_NAME Empty" ; unset OK; }
-[ -z "$WORKERS" ] && { echo "ERROR: WORKERS Empty" ; unset OK; }
-[ -z "$OK" ] && { echo "FATAL: Config problem" ; exit 1; }
-echo $OK
-unset OK
+
+OK="OpenStack lookup OK"
+echo -n "Checking config against openstack... "
 
 
 FLAVOR_ID=`openstack flavor list --format json  | jq  -rc ".[] | select (.Name == \"$FLAVOR_NAME\") | .ID"`
@@ -29,8 +18,6 @@ echo KEYPAIR $KEYPAIR_NAME=$KEYPAIR_ID
 NETWORK_ID=`openstack network list --format json  |  jq  -rc ".[] | select (.Name == \"$NETWORK_NAME\") | .ID"`
 echo NETWORK $NETWORK_NAME=$NETWORK_ID
 
-OK="OpenStack lookup OK"
-echo -n "Checking openstack variables... "
 [ -z "$FLAVOR_ID" ] && { echo "ERROR: FLAVOR_ID Empty" ; unset OK; }
 [ -z "$IMAGE_ID" ] && { echo "ERROR: IMAGE_ID Empty" ; unset OK; }
 [ -z "$SECURITY_GROUP_ID" ] && { echo "ERROR: SECURITY_GROUP_ID Empty" ; unset OK; }

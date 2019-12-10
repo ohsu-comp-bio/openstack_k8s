@@ -17,11 +17,11 @@
 * install openstack cli
 ```
 # apt install python-dev python-pip
+# pip install python-openstackclient
 ```
 * install jq utility
 ```
 # apt install jq
-# pip install python-openstackclient
 ```
 
 * download "RC" file
@@ -96,13 +96,14 @@ Nodes names:
 ### build the cluster
 
 * deploy
+  * `Note:` this step will error if the cluster already exists (see __clean__) `ERROR: SERVER_NAME_COUNT not 0 was  1 k8test-master  exists?`
 
 ```
-$ ./build.sh
+$ ./openstack_build.sh
 
 Checking config env variables... CONFIG OK
 ...
-Checking openstack variables... OpenStack lookup OK
+Checking config against openstack... OpenStack lookup OK
 ...
 Contacting all hosts...
 k8test-worker1 10.50.50.98
@@ -117,6 +118,12 @@ OK
 
 ```
 
+* reference
+
+* `server_map`: list of node names and fixed ip addresses
+* `kubeadm.out`: master node setup, includes **secure join command**
+
+
 * check
 
 ```
@@ -125,4 +132,15 @@ NAME             STATUS   ROLES    AGE     VERSION   INTERNAL-IP   EXTERNAL-IP  
 k8test-master    Ready    master   8m20s   v1.16.3   10.50.50.97   <none>        Ubuntu 18.04 LTS   4.15.0-72-generic   docker://18.6.2
 k8test-worker1   Ready    <none>   7m43s   v1.16.3   10.50.50.98   <none>        Ubuntu 18.04 LTS   4.15.0-72-generic   docker://18.6.2
 k8test-worker2   Ready    <none>   7m24s   v1.16.3   10.50.50.99   <none>        Ubuntu 18.04 LTS   4.15.0-72-generic   docker://18.6.2
+```
+
+
+* clean
+
+```
+$ ./clean.sh
+...
+Deleting k8test-master
+Deleting k8test-worker1
+Deleting k8test-worker2
 ```

@@ -1,14 +1,4 @@
 
-OK="CONFIG OK"
-echo -n "Checking config env variables... "
-[ -z "$CLUSTER_NAME" ] && { echo "ERROR: CLUSTER_NAME Empty" ; unset OK; }
-[ -z "$KEYPAIR_NAME" ] && { echo "ERROR: KEYPAIR_NAME Empty" ; unset OK; }
-[ -z "$WORKERS" ] && { echo "ERROR: WORKERS Empty" ; unset OK; }
-[ -z "$OK" ] && { echo "FATAL: Config problem" ; exit 1; }
-echo $OK
-unset OK
-
-
 ## declare an array variable
 read -ra suffixes <<< "master $WORKERS"
 

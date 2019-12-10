@@ -12,3 +12,6 @@ do
     echo "$SERVER_NAME does not exist, proceeding."
   fi
 done
+# delete previous output files
+rm kube*.out
+rm server_map
