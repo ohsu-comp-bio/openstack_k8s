@@ -120,8 +120,8 @@ OK
 
 * reference
 
-* `server_map`: list of node names and fixed ip addresses
-* `kubeadm.out`: master node setup, includes **secure join command**
+  * `server_map`: list of node names and fixed ip addresses
+  * `kubeadm.out`: master node setup, includes **secure join command**
 
 
 * check
