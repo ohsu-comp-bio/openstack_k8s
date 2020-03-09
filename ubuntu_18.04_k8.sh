@@ -28,9 +28,12 @@ cat > /etc/docker/daemon.json <<EOF
   "log-opts": {
     "max-size": "100m"
   },
-  "storage-driver": "overlay2"
+  "storage-driver": "overlay2",
+  "data-root": "/mnt/docker",
+  "mtu": 1454
 }
 EOF
+
 
 mkdir -p /etc/systemd/system/docker.service.d
 
@@ -39,6 +42,10 @@ systemctl daemon-reload
 systemctl restart docker
 # restart on re-boot
 systemctl enable docker.service
+
+# add current user to docker
+usermod -aG docker $USER
+
 
 # install kubernetes
 
