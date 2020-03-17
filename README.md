@@ -96,7 +96,17 @@ Nodes names:
   k8test-worker2
 ```
 
-### build the cluster
+### one step deploy
+* validate config
+* form the instances
+* find the fixed IP addresses, write to server_map
+* build kubernetes
+```
+build.sh
+```
+
+### troubleshooting / development
+#### build the cluster
 
 * deploy
   * `Note:` this step will error if the cluster already exists (see __clean__) `ERROR: SERVER_NAME_COUNT not 0 was  1 k8test-master  exists?`
@@ -119,6 +129,12 @@ OK
 Setting up kubeadm on k8test-worker2 ...OK
 OK
 
+```
+
+* find the fixed IP addresses, write to server_map
+
+```
+./verify_connections.sh
 ```
 
 * reference
