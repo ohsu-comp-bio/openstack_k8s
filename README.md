@@ -70,11 +70,13 @@ export WORKERS="worker1 worker2"
 export NETWORK_NAME="ccc_network"
 export OS_IDENTITY_API_VERSION=3
 
-
 # openstack parameters for master and workers
 export SECURITY_GROUP_NAME=default
 export PROJECT_NAME=CCC
 export KEYPAIR_NAME='k8test'
+
+# ssh options to quiet and no known hosts
+export SSH_OPTS="-q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "
 ```
 
 * setup validation
