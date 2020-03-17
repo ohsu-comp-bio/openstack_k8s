@@ -67,6 +67,9 @@ export IMAGE_BASE='ubuntu_18.04'
 export CLUSTER_NAME=k8test
 # must be a space separated list of workers
 export WORKERS="worker1 worker2"
+export NETWORK_NAME="ccc_network"
+export OS_IDENTITY_API_VERSION=3
+
 
 # openstack parameters for master and workers
 export SECURITY_GROUP_NAME=default
