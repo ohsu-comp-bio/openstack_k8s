@@ -9,7 +9,8 @@ echo FLAVOR $FLAVOR_NAME=$FLAVOR_ID
 IMAGE_ID=`openstack image list --format json  |  jq  -rc ".[] | select (.Name == \"$IMAGE_NAME\") | .ID"`
 echo IMAGE $IMAGE_NAME=$IMAGE_ID
 
-SECURITY_GROUP_ID=`openstack security group list --project $PROJECT_NAME --format json  |  jq  -rc ".[] | select (.Name == \"$SECURITY_GROUP_NAME\") | .ID"`
+PROJECT_ID=`openstack project show $PROJECT_NAME  --format json  | jq -rc ".id" `
+SECURITY_GROUP_ID=`openstack security group list --project $PROJECT_ID --format json  |  jq  -rc ".[] | select (.Name == \"$SECURITY_GROUP_NAME\") | .ID"`
 echo SECURITY_GROUP $SECURITY_GROUP_NAME=$SECURITY_GROUP_ID
 
 KEYPAIR_ID=`openstack keypair list --format json  |  jq  -rc ".[] | select (.Name == \"$KEYPAIR_NAME\") | .Fingerprint"`
