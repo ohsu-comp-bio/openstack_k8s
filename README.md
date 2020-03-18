@@ -70,11 +70,13 @@ export WORKERS="worker1 worker2"
 export NETWORK_NAME="ccc_network"
 export OS_IDENTITY_API_VERSION=3
 
-
 # openstack parameters for master and workers
 export SECURITY_GROUP_NAME=default
 export PROJECT_NAME=CCC
 export KEYPAIR_NAME='k8test'
+
+# ssh options to quiet and no known hosts
+export SSH_OPTS="-q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "
 ```
 
 * setup validation
@@ -96,7 +98,17 @@ Nodes names:
   k8test-worker2
 ```
 
-### build the cluster
+### one step deploy
+* validate config
+* form the instances
+* find the fixed IP addresses, write to server_map
+* build kubernetes
+```
+build.sh
+```
+
+### troubleshooting / development
+#### build the cluster
 
 * deploy
   * `Note:` this step will error if the cluster already exists (see __clean__) `ERROR: SERVER_NAME_COUNT not 0 was  1 k8test-master  exists?`
@@ -119,6 +131,12 @@ OK
 Setting up kubeadm on k8test-worker2 ...OK
 OK
 
+```
+
+* find the fixed IP addresses, write to server_map
+
+```
+./verify_connections.sh
 ```
 
 * reference

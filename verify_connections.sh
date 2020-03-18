@@ -25,7 +25,7 @@ do
   # loop until we can contact them
   while :
   do
-    ssh -i ~/.ssh/$KEYPAIR_NAME ubuntu@${SERVER_MAP[$SERVER_NAME]} 'pwd' > /tmp/contact-check
+    ssh $SSH_OPTS -i ~/.ssh/$KEYPAIR_NAME ubuntu@${SERVER_MAP[$SERVER_NAME]} 'pwd' > /tmp/contact-check
     if [ $? -eq 0 ]; then
         echo $SERVER_NAME ${SERVER_MAP[$SERVER_NAME]} >> server_map
         break
