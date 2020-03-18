@@ -21,7 +21,7 @@ done < "server_map"
 
 
 SERVER_NAME="$CLUSTER_NAME"-master
-KUBEADM_RESULTS=$(ssh ${SSH_OPTS} -i ~/.ssh/$KEYPAIR_NAME ubuntu@${SERVER_MAP[$SERVER_NAME]} 'sudo kubectl --kubeconfig /etc/kubernetes/admin.conf get nodes -o wide')
+KUBEADM_RESULTS=$(ssh ${SSH_OPTS} -i ~/.ssh/$KEYPAIR_NAME ubuntu@${SERVER_MAP[$SERVER_NAME]} 'echo NODES: ; kubectl --kubeconfig /etc/kubernetes/admin.conf get nodes -o wide; echo PODS: ;  kubectl get pods  2>&1 ')
 echo "$KUBEADM_RESULTS"
 # KUBEADM_RESULTS=$(ssh ${SSH_OPTS} -i ~/.ssh/$KEYPAIR_NAME ubuntu@${SERVER_MAP[$SERVER_NAME]} 'sudo kubectl --kubeconfig /etc/kubernetes/admin.conf describe nodes')
 # echo "$KUBEADM_RESULTS"

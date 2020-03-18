@@ -57,7 +57,13 @@ EOF
 
   echo  "Setting up kubernetes proxy"
   OK=OK
-  KUBEPROXY_RESULTS=$(ssh ${SSH_OPTS} -t -i ~/.ssh/$KEYPAIR_NAME ubuntu@${SERVER_MAP[$SERVER_NAME]} 'sudo kubectl --kubeconfig /etc/kubernetes/admin.conf proxy --port=8080 &')
+  # KUBEPROXY_RESULTS=$(ssh ${SSH_OPTS} -t -i ~/.ssh/$KEYPAIR_NAME ubuntu@${SERVER_MAP[$SERVER_NAME]} 'sudo kubectl --kubeconfig /etc/kubernetes/admin.conf proxy --port=8080 &')
+  cat << EOF | KUBEPROXY_RESULTS=$(ssh ${SSH_OPTS} -t -i ~/.ssh/$KEYPAIR_NAME ubuntu@${SERVER_MAP[$SERVER_NAME]})
+sudo nohup kubectl --kubeconfig /etc/kubernetes/admin.conf proxy --port=8080 > proxy.out 2 >proxy.err < /dev/null &
+sudo chown -R  ubuntu:ubuntu /home/ubuntu/.kube
+sudo chown ubuntu:ubuntu /etc/kubernetes/admin.conf
+kubectl get pods
+EOF
   if [ $? -eq 0 ]; then
       echo "OK"
   else
@@ -67,9 +73,14 @@ EOF
   fi
   # the double-quoted version of the variable (echo "$RESULT") preserves internal spacing of the value exactly as it is represented in the variable — newlines, tabs, multiple blanks and all
   echo "$KUBEPROXY_RESULTS" > kubectl-proxy.out
+
+
+
   [ -z "$OK" ] && { echo "FATAL: kubectl failed see kubectl-proxy.out" ; exit 1; }
   echo $OK
   unset OK
+
+  
 
   echo "DONE"
 
