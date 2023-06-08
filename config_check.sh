@@ -1,7 +1,8 @@
 OK="CONFIG OK"
 echo -n "Checking config env variables... "
 [ -z "$OS_IDENTITY_API_VERSION" ] && { echo "ERROR: OS_IDENTITY_API_VERSION Empty" ; unset OK; }
-[ -z "$FLAVOR_NAME" ] && { echo "ERROR: FLAVOR_NAME Empty" ; unset OK; }
+[ -z "$WORKER_FLAVOR_NAME" ] && { echo "ERROR: WORKER_FLAVOR_NAME Empty" ; unset OK; }
+[ -z "$MASTER_FLAVOR_NAME" ] && { echo "ERROR: MASTER_FLAVOR_NAME Empty" ; unset OK; }
 [ -z "$IMAGE_NAME" ] && { echo "ERROR: IMAGE_NAME Empty" ; unset OK; }
 [ -z "$SECURITY_GROUP_NAME" ] && { echo "ERROR: SECURITY_GROUP_NAME Empty" ; unset OK; }
 [ -z "$KEYPAIR_NAME" ] && { echo "ERROR: KEYPAIR_NAME Empty" ; unset OK; }
@@ -16,7 +17,8 @@ unset OK
 
 cat << EOF
 Config for nodes in CLUSTER_NAME $CLUSTER_NAME:
-  FLAVOR_NAME $FLAVOR_NAME
+  WORKER_FLAVOR_NAME $WORKER_FLAVOR_NAME
+  MASTER_FLAVOR_NAME $MASTER_FLAVOR_NAME
   IMAGE_NAME $IMAGE_NAME
 Openstack parameters:
   SECURITY_GROUP_NAME $SECURITY_GROUP_NAME

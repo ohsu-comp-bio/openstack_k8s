@@ -55,7 +55,8 @@ $ openstack user show walsbr
 ```
 $ cat .env
 # openstack flavor to use for master and workers
-export FLAVOR_NAME=m1.medium
+export WORKER_FLAVOR_NAME=m1.medium
+export MASTER_FLAVOR_NAME=m1.small
 
 # name of image for master and workers
 export IMAGE_NAME='ubuntu_18.04_k8'

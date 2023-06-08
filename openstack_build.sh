@@ -3,8 +3,12 @@ OK="OpenStack lookup OK"
 echo -n "Checking config against openstack... "
 
 
-FLAVOR_ID=`openstack flavor list --format json  | jq  -rc ".[] | select (.Name == \"$FLAVOR_NAME\") | .ID"`
-echo FLAVOR $FLAVOR_NAME=$FLAVOR_ID
+WORKER_FLAVOR_ID=`openstack flavor list --format json  | jq  -rc ".[] | select (.Name == \"$WORKER_FLAVOR_NAME\") | .ID"`
+echo WORKER_FLAVOR_NAME $WORKER_FLAVOR_NAME=$WORKER_FLAVOR_ID
+
+MASTER_FLAVOR_ID=`openstack flavor list --format json  | jq  -rc ".[] | select (.Name == \"$MASTER_FLAVOR_NAME\") | .ID"`
+echo MASTER_FLAVOR_NAME $MASTER_FLAVOR_NAME=$MASTER_FLAVOR_ID
+
 
 IMAGE_ID=`openstack image list --format json  |  jq  -rc ".[] | select (.Name == \"$IMAGE_NAME\") | .ID"`
 echo IMAGE $IMAGE_NAME=$IMAGE_ID
@@ -19,7 +23,8 @@ echo KEYPAIR $KEYPAIR_NAME=$KEYPAIR_ID
 NETWORK_ID=`openstack network list --format json  |  jq  -rc ".[] | select (.Name == \"$NETWORK_NAME\") | .ID"`
 echo NETWORK $NETWORK_NAME=$NETWORK_ID
 
-[ -z "$FLAVOR_ID" ] && { echo "ERROR: FLAVOR_ID Empty" ; unset OK; }
+[ -z "$WORKER_FLAVOR_ID" ] && { echo "ERROR: WORKER_FLAVOR_ID Empty" ; unset OK; }
+[ -z "$MASTER_FLAVOR_ID" ] && { echo "ERROR: MASTER_FLAVOR_ID Empty" ; unset OK; }
 [ -z "$IMAGE_ID" ] && { echo "ERROR: IMAGE_ID Empty" ; unset OK; }
 [ -z "$SECURITY_GROUP_ID" ] && { echo "ERROR: SECURITY_GROUP_ID Empty" ; unset OK; }
 [ -z "$KEYPAIR_ID" ] && { echo "ERROR: KEYPAIR_ID Empty" ; unset OK; }
@@ -47,6 +52,9 @@ do
 
   [ -z "$OK" ] && { echo "FATAL: OpenStack lookup problem" ; exit 1; }
   echo $OK
+
+  [ "$suffix" == "master" ] && FLAVOR_ID=$MASTER_FLAVOR_ID
+  [ "$suffix" != "master" ] && FLAVOR_ID=$WORKER_FLAVOR_ID
 
   openstack server create \
     --flavor $FLAVOR_ID \
